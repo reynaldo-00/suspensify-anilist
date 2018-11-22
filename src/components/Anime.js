@@ -1,32 +1,52 @@
 import React, { Component } from 'react';
 import styled, {css} from'styled-components';
 import { graphql } from 'react-apollo';
+import { unstable_createResource as createResource } from 'react-cache';
+
 import { getAnime } from '../queries/queries';
 import Loading from './Loading';
+
+const imageSource = createResource(source => new Promise(resolve => {
+    const img = new Image();
+    img.src = source;
+    img.onload = resolve;
+}))
+
+const Img = ({src, alt, ...props}) => {
+    imageSource.read(src);
+    return <img src={src} alt={alt} {...props} />
+}
 
 class Anime extends Component {
 
     displayAnime = () => {
-        const { data } = this.props;
+        const data = this.props.data  || {};
+        const media = data.Media || {};
+        const coverImage = media.coverImage || '';
         return data.loading
-            ? <Loading/>
+            ? (
+                <Container index={this.props.index}>
+                    <Filter />
+                    <Loading/>
+                </Container>
+            )
             : (
-                <Info>
-                    <h2>{data.Media.title.userPreferred}</h2>
-                </Info>
+                <Container index={this.props.index}>
+                    <React.Suspense fallback={
+                        <img src={coverImage.medium} alt={media.title.userPreferred} />
+                    }>
+                        <Img src={coverImage.large} alt={media.title.userPreferred} />
+                    </React.Suspense>
+                    <Filter />
+                    <Info>
+                        <h2>{media.title.userPreferred}</h2>
+                    </Info>
+                </Container>
             );
     }
 
     render() {
-        const data = this.props.data  || {};
-        const media = data.Media || {};
-        const coverImage = media.coverImage || '';
-        return (
-            <Container background={coverImage} index={this.props.index}>
-                <Filter />
-                {this.displayAnime()}
-            </Container>
-        );
+        return this.displayAnime();
     }
 }
 
@@ -53,6 +73,10 @@ const Container = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    img {
+        width: 100%;
+        height: 100%;
+    }
     ${props => props.background && css`
         background-image: url(${props => props.background.large});
         background-repeat: no-repeat;

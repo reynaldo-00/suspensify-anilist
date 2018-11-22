@@ -15,15 +15,16 @@ class App extends Component {
       // 'A-1 Pictures',
       // 'ufotable'
     ];
+
     return (
       <Container>
-        {
-          studios.map((studio, index) => {
-            return (
-              <Studio key={index} studio={studio} />
-            );
-          })
-        }
+          {
+            studios.map((studio, index) => {
+              return (
+                <Studio key={index} studio={studio} />
+                );
+            })
+          }
       </Container>
     );
   }
