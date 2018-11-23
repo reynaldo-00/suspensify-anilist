@@ -29,12 +29,12 @@ class App extends Component {
     this.setState({search})
   }
 
-  displayStudios = () => {
-    return this.state.studios.map((studio, index) => <Studio key={index} studio={studio} />);
+  displayStudios = (props) => {
+    return this.state.studios.map((studio, index) => <Studio key={index} studio={studio} {...props} />);
   }
 
-  displaySearchResults = () => {
-    return <Studio studio={this.state.search}/>
+  displaySearchResults = (props) => {
+    return <Studio studio={this.state.search} {...props}/>
   }
 
   render() {
@@ -46,7 +46,7 @@ class App extends Component {
             render={props => (
               <>
                 <Header search={this.state.search} onChange={this.onChangeHandler} />
-                {!this.state.search.length ? this.displayStudios() : this.displaySearchResults()}
+                {!this.state.search.length ? this.displayStudios(props) : this.displaySearchResults(props)}
               </>
             )}
           />

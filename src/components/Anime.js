@@ -19,6 +19,11 @@ const Img = ({src, alt, ...props}) => {
 
 class Anime extends Component {
 
+    goToAnime = (e, id) => {
+        e.preventDefault();
+        this.props.history.push(`/anime/${id}`);
+    }
+
     displayAnime = () => {
         const data = this.props.data  || {};
         const media = data.Media || {};
@@ -31,7 +36,7 @@ class Anime extends Component {
                 </Container>
             )
             : (
-                <Container index={this.props.index}>
+                <Container index={this.props.index} onClick={e => this.goToAnime(e, media.id)}>
                     <React.Suspense fallback={
                         <img src={coverImage.medium} alt={media.title.userPreferred} />
                     }>

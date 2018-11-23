@@ -7,6 +7,11 @@ import Loading from './Loading';
 
 class Studio extends Component {
 
+    goToStudio = (e, id) => {
+        e.preventDefault();
+        this.props.history.push(`/studio/${id}`);
+    }
+
     displayStudio = () => {
         const { data } = this.props;
         return data.loading || data.Studio === undefined
@@ -17,8 +22,8 @@ class Studio extends Component {
             )
             : (
                 <Container>
-                    <Container.Title>{data.Studio.name}</Container.Title>
-                    <AnimeList nodes={data.Studio.media.nodes}/>
+                    <Container.Title onClick={e => this.goToStudio(e, data.Studio.id)}>{data.Studio.name}</Container.Title>
+                    <AnimeList nodes={data.Studio.media.nodes} {...this.props} />
                 </Container>
             )
     }
@@ -63,6 +68,8 @@ const Container = styled.section`
 const Title = styled.h2`
     font-size: 20px;
     font-weight: 700;
+    cursor: pointer;
+    user-select: none;
     color: #d46b8c; 
     /* color: #f9b5ac; */
     /* color: #ae88ae; */
