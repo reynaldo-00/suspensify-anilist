@@ -9,7 +9,6 @@ const client = new ApolloClient({
     uri: 'https://graphql.anilist.co',
 })
 
-
 ReactDOM.render(
     <ApolloProvider client={client}>
         <App />

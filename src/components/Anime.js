@@ -23,7 +23,7 @@ class Anime extends Component {
         const data = this.props.data  || {};
         const media = data.Media || {};
         const coverImage = media.coverImage || '';
-        return data.loading
+        return data.loading || data === undefined
             ? (
                 <Container index={this.props.index}>
                     <Filter />
@@ -105,12 +105,11 @@ const Container = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     h2 {
-        margin-top: 190px;
+        margin-top: 210px;
         font-size: 18px;
         word-wrap: break-word;
-        color: #f9b5ac;
-        /* color: #ae88ae; */
+        color: #ae88ae;
     }
  `;

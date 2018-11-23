@@ -1,30 +1,44 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Studio from './Studio';
+import Header from './Header';
 
 class App extends Component {
-  render() {
-    const studios = [
-      '8-bit',
-      'Shaft',
-      'MadHouse',
-      // 'Kyoto Animation',
-      // 'BONES',
-      // 'Trigger',
-      // 'Studio Ghibli',
-      // 'A-1 Pictures',
-      // 'ufotable'
-    ];
+  constructor(props) {
+    super(props)
+    this.state = {
+      search : '',
+      studios: [
+        // '8-bit',
+        'Shaft',
+        'MadHouse',
+        'Kyoto Animation',
+        // 'BONES',
+        // 'Trigger',
+        // 'Studio Ghibli',
+        // 'A-1 Pictures',
+        // 'ufotable'
+      ]
+    }
+  }
 
+  onChangeHandler = search => {
+    this.setState({search})
+  }
+
+  displayStudios = () => {
+    return this.state.studios.map((studio, index) => <Studio key={index} studio={studio} />);
+  }
+
+  displaySearchResults = () => {
+    return <Studio studio={this.state.search}/>
+  }
+
+  render() {
     return (
       <Container>
-          {
-            studios.map((studio, index) => {
-              return (
-                <Studio key={index} studio={studio} />
-                );
-            })
-          }
+          <Header search={this.state.search} onChange={this.onChangeHandler} />
+          {!this.state.search.length ? this.displayStudios() : this.displaySearchResults()}
       </Container>
     );
   }

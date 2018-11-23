@@ -9,7 +9,7 @@ class Studio extends Component {
 
     displayStudio = () => {
         const { data } = this.props;
-        return data.loading
+        return data.loading || data === undefined
             ? (
                 <Container loading>
                     <Loading />
@@ -24,7 +24,15 @@ class Studio extends Component {
     }
 
     render() {
-        return this.displayStudio();
+        return (
+            <>
+                {
+                    this.props.data.Studio !== null
+                        ? this.displayStudio()
+                        : <h2>No results found</h2>
+                }
+            </>
+        );
     }
 }
 
