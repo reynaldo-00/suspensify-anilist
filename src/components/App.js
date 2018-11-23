@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Route } from 'react-router-dom';
 import Studio from './Studio';
 import Header from './Header';
+import AnimeDetails from './AnimeDetails';
+import StudioDetails from './StudioDetails';
 
 class App extends Component {
   constructor(props) {
@@ -11,8 +14,8 @@ class App extends Component {
       studios: [
         // '8-bit',
         'Shaft',
-        'MadHouse',
-        'Kyoto Animation',
+        // 'MadHouse',
+        // 'Kyoto Animation',
         // 'BONES',
         // 'Trigger',
         // 'Studio Ghibli',
@@ -37,8 +40,27 @@ class App extends Component {
   render() {
     return (
       <Container>
-          <Header search={this.state.search} onChange={this.onChangeHandler} />
-          {!this.state.search.length ? this.displayStudios() : this.displaySearchResults()}
+          <Route
+            path="/"
+            exact
+            render={props => (
+              <>
+                <Header search={this.state.search} onChange={this.onChangeHandler} />
+                {!this.state.search.length ? this.displayStudios() : this.displaySearchResults()}
+              </>
+            )}
+          />
+
+          <Route 
+            path="/anime/:id"
+            render={props => <AnimeDetails {...props}/>}
+          />
+
+          <Route 
+            path="/studio/:id"
+            render={props => <StudioDetails {...props}/>}
+          />
+
       </Container>
     );
   }

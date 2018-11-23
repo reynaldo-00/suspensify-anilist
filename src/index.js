@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './index.css';
+import App from './components/App';
 
 const client = new ApolloClient({
     uri: 'https://graphql.anilist.co',
@@ -11,6 +12,8 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <Router>
+            <App />
+        </Router>
     </ApolloProvider>
 , document.getElementById('root'));

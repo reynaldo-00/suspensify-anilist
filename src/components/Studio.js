@@ -9,7 +9,7 @@ class Studio extends Component {
 
     displayStudio = () => {
         const { data } = this.props;
-        return data.loading || data === undefined
+        return data.loading || data.Studio === undefined
             ? (
                 <Container loading>
                     <Loading />
