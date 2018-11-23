@@ -31,3 +31,25 @@ export const getAnime = gql`
     }
 `;
 
+export const getAnimeDetails = gql`
+    query($id: Int!) {
+        Media(id: $id) {
+            id
+            idMal
+            description(asHtml: false)
+            episodes
+            bannerImage
+            genres
+            averageScore
+            title {
+                userPreferred
+            }
+            coverImage {
+                large
+                medium
+            }
+            averageScore
+        }
+    }
+`;
+
