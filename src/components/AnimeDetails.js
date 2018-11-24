@@ -6,25 +6,12 @@ import { getAnimeDetails } from '../queries/queries';
 import Loading from './Loading';
 
 /* this.props.data.Media
-averageScore: 89
-bannerImage: "https://s3.anilist.co/media/anime/banner/21745-5psGR43Ck4RZ.jpg"
-coverImage:
-large: "https://s3.anilist.co/media/anime/cover/medium/nx21745-CEq1O4v9d6IQ.png"
-medium: "https://s3.anilist.co/media/anime/cover/small/nx21745-CEq1O4v9d6IQ.png"
-__typename: "MediaCoverImage"
-__proto__: Object
-description: "Final season of the Monogatari Series, part 4/5. Contains the arcs Mayoi Hell, Hitagi Rendezvous, and Ougi Dark from the Owarimonogatari light novels.↵<br><br>↵"That is—the end of your youth." On the morning of the appointed day of the college entrance examinations, Koyomi Araragi headed towards North Shirahebi Shrine. What awaits him there with an unexpected smiling face is the slice of the sword that marks the final decisive battle—All of the "stories" now meet their resolution!<br><br>↵(Source: Bakemonogatari Wiki)"
-episodes: 7
 genres: Array(3)
 0: "Comedy"
 1: "Mystery"
 2: "Supernatural"
-length: 3
-__proto__: Array(0)
 id: 21745
 idMal: 35247
-title:
-userPreferred: "Owarimonogatari (Ge)"
 */
 
 class AnimeDetails extends Component {
@@ -53,10 +40,22 @@ class AnimeDetails extends Component {
                 <Banner background={media.bannerImage}>
                     <Cover cover={media.coverImage.large} />
                 </Banner>
+                <ExternalLinks>
+                    <LinkButton mal href={`https://myanimelist.net/anime/${media.idMal}`} target="_blank">MAL</LinkButton>
+                    <LinkButton anilist href={`https://anilist.co/anime/${media.id}`} target="_blank">Anilist</LinkButton>
+                </ExternalLinks>
                 <Info expand={this.state.expand} >
                     <Info.Title>{media.title.userPreferred}</Info.Title>
                     <h3>Score: <span>{media.averageScore / 10}</span></h3>
                     <h3>Episodes: <span>{media.episodes}</span></h3>
+                    <h3>Genres: 
+                        {
+                            media.genres.map((genre, index) => {
+                                if (index + 1 === media.genres.length) return <span key={index}> {genre}</span>
+                                return <span key={index}> {genre},</span>
+                            })
+                        }
+                    </h3>
                     <h3 className="description">Description: <span>{media.description}</span></h3>
                     <Expand onClick={e => this.expandDescription(e)}>
                         {
@@ -66,7 +65,6 @@ class AnimeDetails extends Component {
                         }
                     </Expand>
                 </Info>
-
             </Container>
         );
     }
@@ -80,9 +78,41 @@ export default graphql(getAnimeDetails, {
     })
 })(AnimeDetails);
 
+const ExternalLinks = styled.div`
+    width: 100px;
+    height: 75px;
+    position: absolute;
+    left: 50px;
+    top: 305px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
+const LinkButton = styled.a`
+    width: 100%;
+    height: 30px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    ${props => props.mal && css`
+        background-color: #2E51A2;
+    `}
+    ${props => props.anilist && css`
+        background-color: #d46b8c;
+    `}
+`;
+
 const Container = styled.div`
     width: 100%;
     min-height: 100vh;
+    position: relative;
 `;
 
 const Banner = styled.div`
@@ -99,7 +129,7 @@ const Cover = styled.div`
     height: 150px;
     position: absolute;
     left: 50px;
-    bottom: -90px;
+    bottom: -55px;
     background: url(${props => props.cover});
     background-size: cover;
 `;
@@ -110,7 +140,7 @@ const Info = styled.div`
     height: 150px;
     h3 {
         font-size: 16px;
-        margin: 10px 0px;
+        margin: 4px 0px;
         color: #ae88ae;
         span {
             color: #bababa;
