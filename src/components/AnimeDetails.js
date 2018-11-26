@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import styled, {css} from 'styled-components';
+import axios from 'axios';
 
 import { getAnimeDetails } from '../queries/queries';
 import Loading from './Loading';
 
-/* this.props.data.Media
-genres: Array(3)
-0: "Comedy"
-1: "Mystery"
-2: "Supernatural"
-id: 21745
-idMal: 35247
-*/
+import reddit from '../reddit.png';
+import upvote from '../upvote.png';
 
 class AnimeDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            expand: false
+            expand: false,
+            gotredditInfo: false,
+            threads: []
         }
     }
 
@@ -28,10 +25,58 @@ class AnimeDetails extends Component {
         this.setState(prevState => ({...this.state, expand: !prevState.expand}))
     }
 
+    getReddit = (titles) => {
+        //https://www.reddit.com/r/anime/search.json?q=title:Goblin%20Slayer%20flair%3Aepisode&restrict_sr=1
+        const baseUrl = `https://www.reddit.com/r/anime/search.json?q=title:`
+        const urlEnding = '%20flair%3Aepisode&restrict_sr=1';
+        // const title = 'Goblin Slayer';
+        const title = titles.userPreferred;
+        // const title = 'Owarimonogatari';
+
+        const url = `${baseUrl}${title}${urlEnding}`
+
+        if (!this.state.gotredditInfo){
+            axios.get(url)
+            .then(res => {
+                const threads = res.data.data.children;
+                threads.sort((a, b) => {
+                    const titleA = a.data.title.toUpperCase(); // ignore upper and lowercase
+                    const titleB = b.data.title.toUpperCase(); // ignore upper and lowercase
+                    if (titleA < titleB) {
+                        return -1;
+                    }
+                    if (titleA > titleB) {
+                        return 1;
+                    }
+                    return 0;
+                })
+                this.setState({threads, gotredditInfo: true})
+            })
+            .catch(error => console.log(error))
+        }
+    }
+
+    displayReddit = () => {
+        const threads = this.state.threads || [];
+        console.log(threads);
+
+        return threads.map((thread, index) => {
+            return (
+                <Link key={index} href={thread.data.url} target="_blank" >
+                    <Icon/>
+                    <Upvote ups={thread.data.ups}/>
+                    <LinkDetails>{thread.data.title}</LinkDetails>
+                </Link>
+            );
+        })
+    }
+
     render() {
         console.log(this.props);
 
         const media = this.props.data.Media || {};
+
+        if (!this.props.data.loading) this.getReddit(media.title);
 
         return this.props.data.loading
         ? <Loading />
@@ -65,6 +110,9 @@ class AnimeDetails extends Component {
                         }
                     </Expand>
                 </Info>
+                <RedditLinks>
+                    {this.displayReddit()}
+                </RedditLinks>
             </Container>
         );
     }
@@ -77,6 +125,49 @@ export default graphql(getAnimeDetails, {
         }
     })
 })(AnimeDetails);
+
+const LinkDetails = styled.h3`
+    margin-left: 25px;
+`;
+
+const Link = styled.a`
+    width: 100%;
+    height: 75px;
+    color: #ae88ae;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: solid red 1px; */
+`;
+
+const Icon = styled.span`
+    width: 50px;
+    height: 50px;
+    background-image: url(${reddit});
+    background-size: 50px, 50px;
+`;
+const Upvote = styled.span`
+    width: 25px;
+    height: 25px;
+    background-image: url(${upvote});
+    background-size: 25px;
+    margin-left: 15px;
+    position: relative;
+    margin-top: -15px;
+    &::after {
+        content: '${props => props.ups}';
+        position: absolute;
+        bottom: -25px;
+        left: -5px;
+    }
+`;
+
+const RedditLinks = styled.div`
+    margin-top: 50px;
+    width: 100%;
+
+`;
 
 const ExternalLinks = styled.div`
     width: 100px;
