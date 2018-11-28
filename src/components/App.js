@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import Studio from './Studio';
-import Header from './Header';
+// import SearchBar from './SearchBar';
+import Home from './Home/Home';
 import AnimeDetails from './AnimeDetails';
 import StudioDetails from './StudioDetails';
 
@@ -44,12 +45,19 @@ class App extends Component {
             path="/"
             exact
             render={props => (
+              <Home {...props} />
+            )}
+          />
+          {/* <Route
+            path="/"
+            exact
+            render={props => (
               <>
-                <Header search={this.state.search} onChange={this.onChangeHandler} />
+                <SearchBar search={this.state.search} onChange={this.onChangeHandler} />
                 {!this.state.search.length ? this.displayStudios(props) : this.displaySearchResults(props)}
               </>
             )}
-          />
+          /> */}
 
           <Route 
             path="/anime/:id"

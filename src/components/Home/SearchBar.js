@@ -1,22 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Header = ({search, onChange}) => {
+const SearchBar = ({search, onChange}) => {
 
     return (
         <Container>
             <i className="fas fa-search"></i>
             <Container.Input
+                name='search'
                 type="text" 
-                placeHolder="AnimeStudio"
+                placeholder="AnimeStudio"
                 value={search} 
-                onChange={e => onChange(e.target.value)}
+                onChange={e => onChange(e)}
             />
         </Container>
     );
 }
 
-export default Header;
+export default SearchBar;
 
 const Container = styled.div`
     width: 300px;

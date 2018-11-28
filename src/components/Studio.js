@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import styled, {css} from 'styled-components';
 import { getStudios } from '../queries/queries';
-import AnimeList from './AnimeList';
+import AnimeList from './Home/AnimeList';
 import Loading from './Loading';
 
 class Studio extends Component {

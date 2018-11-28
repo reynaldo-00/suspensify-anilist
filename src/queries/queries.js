@@ -53,3 +53,28 @@ export const getAnimeDetails = gql`
     }
 `;
 
+export const getAnimeSearch = gql`
+    query($search: String!){
+        Page (page: 1, perPage: 12) {
+            pageInfo {
+                total
+                currentPage
+                lastPage
+                hasNextPage
+                perPage
+            }
+            media (search: $search, sort: SCORE_DESC,) {
+                id
+                title {
+                    userPreferred
+                }
+                coverImage {
+                    large
+                    medium
+                }
+                averageScore
+            }
+        }
+    }
+`;
+

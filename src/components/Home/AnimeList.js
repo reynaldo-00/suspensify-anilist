@@ -6,7 +6,14 @@ class AnimeList extends Component {
     render() {
         return (
             <Container>
-                {this.props.nodes.map((node, index) => <Anime key={node.id} id={node.id} index={index} {...this.props}/>)}
+                {this.props.nodes.map((node, index) => 
+                    <Anime 
+                        key={node.id} 
+                        animeInfo={node}
+                        index={index} 
+                        animeClicked={this.props.animeClicked}
+                    />
+                )}
             </Container>
         );
     }
