@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
+import styled from 'styled-components';
 
 import Loading from '../Loading';
-import AnimeList from './AnimeList';
+// import AnimeList from './AnimeList';
 import { getAnimeSearch } from '../../queries/queries'
 
 class SearchResult extends Component {
@@ -16,11 +17,12 @@ class SearchResult extends Component {
         const data = this.props.data  || {};
 
         return data.loading || data === undefined
-        ? (<Loading />)
+        ? <Loading />
+        // : <AnimeList nodes={data.Page.media} animeClicked={this.animeClicked}/>
         : (
-            <div>
-                <AnimeList nodes={data.Page.media} animeClicked={this.animeClicked}/>
-            </div>
+            <Container>
+                
+            </Container>
         )
     }
 }
@@ -34,3 +36,7 @@ export default graphql(getAnimeSearch, {
         }
     }
 })(SearchResult);
+
+const Container = styled.div`
+    width: 100%;
+`

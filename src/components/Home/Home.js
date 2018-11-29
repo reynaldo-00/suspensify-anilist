@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
+import AiringShows from './AiringShows';
 
 class Home extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class Home extends Component {
                         ? <SearchResult search={this.state.search} {...this.props} />
                         : <></>
                 }
+                <AiringShows history={this.props.history}/>
             </Container>
         );
     }

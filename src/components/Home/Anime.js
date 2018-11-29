@@ -15,10 +15,15 @@ const Img = ({src, alt, ...props}) => {
 
 class Anime extends Component {
 
+    animeClicked = (e, id) => {
+        e.preventDefault();
+        this.props.history.push(`/anime/${id}`)
+    }
+
     render() {
         const {id, coverImage, title} = this.props.animeInfo;
         return (
-            <Container onClick={e => this.props.animeClicked(e, id)}>
+            <Container onClick={e => this.animeClicked(e, id)}>
                 <React.Suspense fallback={
                     <img src={coverImage.medium} alt={title.userPreferred} />
                 }>
@@ -37,12 +42,12 @@ export default Anime;
 
 
 const Container = styled.section`
-    height: 300px;
-    width: 200px;
-    margin-left: ${props => props.index === 0 ? '0px' : '30px'};
+    height: calc(300px/1.4);
+    width: calc(200px/1.4);
+    margin-top: 20px;
     background: light-grey;
     position: relative;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     user-select: none;
     display: flex;
@@ -51,6 +56,7 @@ const Container = styled.section`
     img {
         width: 100%;
         height: 100%;
+        border-radius: 6px;
     }
     ${props => props.background && css`
         background-image: url(${props => props.background.large});
@@ -63,9 +69,10 @@ const Container = styled.section`
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 6px;
     left: 0;
     top: 0;
-    background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0) 80%);
+    background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0) 110%);
     z-index: 1;
  `;
 
@@ -79,12 +86,12 @@ const Container = styled.section`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: flex-start;
     h2 {
-        margin-top: 210px;
-        font-size: 18px;
+        font-size: 16px;
         word-wrap: break-word;
         color: #ae88ae;
+        margin-bottom: 10px;
     }
  `;

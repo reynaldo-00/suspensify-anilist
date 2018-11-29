@@ -78,3 +78,33 @@ export const getAnimeSearch = gql`
     }
 `;
 
+export const getAiringAnime= gql`
+    query{
+        Page (page: 1, perPage: 20) {
+            pageInfo {
+                total
+                currentPage
+                lastPage
+                hasNextPage
+                perPage
+            }
+            media (
+                season: FALL, 
+                sort: SCORE_DESC, 
+                status: RELEASING, 
+                isAdult:false,
+            ){
+                id
+                title {
+                    userPreferred
+                }
+                coverImage {
+                    large
+                    medium
+                }
+                averageScore
+            }
+        }
+    }
+`;
+
