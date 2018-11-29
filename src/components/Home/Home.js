@@ -23,12 +23,12 @@ class Home extends Component {
                 <Title>ANIscussion</Title>
                 <Info>Search discussion threads for any anime</Info>
                 <SearchBar search={this.state.search} onChange={this.changeHandler}/>
+                <ContentTitle>{this.state.search.length ? 'Search Results' : 'Airing Anime'}</ContentTitle>
                 {
                     this.state.search.length
-                        ? <SearchResult search={this.state.search} {...this.props} />
-                        : <></>
+                        ? <SearchResult search={this.state.search} history={this.props.history} />
+                        : <AiringShows history={this.props.history}/>
                 }
-                <AiringShows history={this.props.history}/>
             </Container>
         );
     }
@@ -43,11 +43,19 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
 `;
 
 const Title = styled.h1`
     font-weight: 800;
     font-size: 25px;
+`;
+
+const ContentTitle = styled.h1`
+    position: absolute;
+    top: 220px;
+    left: 0;
+    font-size: 26px;
 `;
 
 const Info = styled.p`

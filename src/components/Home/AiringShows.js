@@ -13,7 +13,6 @@ class AiringShows extends Component {
         ? <Loading/>
         : 
             <Container>
-                <Title>Airing Anime</Title>
                 {
                     this.props.data.Page.media.map((anime, index) => 
                         <Anime animeInfo={anime} key={index} history={this.props.history}/>
@@ -28,7 +27,6 @@ export default graphql(getAiringAnime)(AiringShows);
 
 const Container = styled.div`
     width: 100%;
-    /* height: 900px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,9 +36,3 @@ const Container = styled.div`
     margin-top: 100px;
 `;
 
-const Title = styled.h1`
-    position: absolute;
-    top: -60px;
-    left: 0;
-    font-size: 26px;
-`;

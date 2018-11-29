@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import styled from 'styled-components';
 
 import Loading from '../Loading';
-// import AnimeList from './AnimeList';
+import Anime from './Anime';
 import { getAnimeSearch } from '../../queries/queries'
 
 class SearchResult extends Component {
@@ -15,13 +15,15 @@ class SearchResult extends Component {
 
     render() {
         const data = this.props.data  || {};
-
         return data.loading || data === undefined
         ? <Loading />
-        // : <AnimeList nodes={data.Page.media} animeClicked={this.animeClicked}/>
         : (
             <Container>
-                
+                {
+                    this.props.data.Page.media.map((anime, index) => 
+                        <Anime animeInfo={anime} key={index} history={this.props.history}/>
+                    )
+                }
             </Container>
         )
     }
@@ -39,4 +41,11 @@ export default graphql(getAnimeSearch, {
 
 const Container = styled.div`
     width: 100%;
-`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: flex-start;
+    flex-flow: row wrap;
+    position: relative;
+    margin-top: 100px;
+`;

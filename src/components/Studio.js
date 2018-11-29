@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import styled, {css} from 'styled-components';
 import { getStudios } from '../queries/queries';
-import AnimeList from './Home/AnimeList';
+// import AnimeList from './Home/AnimeList';
 import Loading from './Loading';
 
 class Studio extends Component {
@@ -23,7 +23,7 @@ class Studio extends Component {
             : (
                 <Container>
                     <Container.Title onClick={e => this.goToStudio(e, data.Studio.id)}>{data.Studio.name}</Container.Title>
-                    <AnimeList nodes={data.Studio.media.nodes} {...this.props} />
+                    {/* <AnimeList nodes={data.Studio.media.nodes} {...this.props} /> */}
                 </Container>
             )
     }
