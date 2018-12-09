@@ -3,11 +3,11 @@ import { graphql } from 'react-apollo';
 import styled, {css} from 'styled-components';
 import axios from 'axios';
 
-import { getAnimeDetails } from '../queries/queries';
-import Loading from './Loading';
+import { getAnimeDetails } from '../../queries/queries';
+import Loading from '../Loading';
 
-import reddit from '../reddit.png';
-import upvote from '../upvote.png';
+import reddit from '../../reddit.png';
+import upvote from '../../upvote.png';
 
 class AnimeDetails extends Component {
 

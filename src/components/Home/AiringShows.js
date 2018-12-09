@@ -9,12 +9,13 @@ import Anime from './Anime';
 
 class AiringShows extends Component {
     render() {
-        return this.props.data.loading 
+        const data = this.props.data  || {};
+        return data.loading || data === undefined
         ? <Loading/>
         : 
             <Container>
                 {
-                    this.props.data.Page.media.map((anime, index) => 
+                    data.Page.media.map((anime, index) => 
                         <Anime animeInfo={anime} key={index} history={this.props.history}/>
                     )
                 }

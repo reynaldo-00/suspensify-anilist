@@ -21,7 +21,7 @@ class Home extends Component {
         return (
             <Container>
                 <Title>ANIscussion</Title>
-                <Info>Search discussion threads for any anime</Info>
+                <Info>Search discussion threads for anime</Info>
                 <SearchBar search={this.state.search} onChange={this.changeHandler}/>
                 <ContentTitle>{this.state.search.length ? 'Search Results' : 'Airing Anime'}</ContentTitle>
                 {

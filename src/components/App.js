@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import Studio from './Studio';
+import Studio from './Studio/Studio';
 // import SearchBar from './SearchBar';
 import Home from './Home/Home';
-import AnimeDetails from './AnimeDetails';
-import StudioDetails from './StudioDetails';
+import AnimeDetails from './AnimeDetails/AnimeDetails';
+import StudioDetails from './Studio/StudioDetails';
 
 class App extends Component {
   constructor(props) {
