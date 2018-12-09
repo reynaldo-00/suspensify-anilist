@@ -2,10 +2,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 
 const generateToken = require('./generateToken');
+const db = require('../database/dbConfig');
+
 const router = express.Router();
 
-router.get('/login', login);
-router.get('/register', register);
+router.post('/login', login);
+router.post('/register', register);
 
 module.exports = router;
 
