@@ -6,6 +6,9 @@ import Studio from './Studio/Studio';
 import Home from './Home/Home';
 import AnimeDetails from './AnimeDetails/AnimeDetails';
 import StudioDetails from './Studio/StudioDetails';
+import Header from './Header/Header';
+import Login from './Auth/Login'
+import Register from './Auth/Register'
 
 class App extends Component {
   constructor(props) {
@@ -41,6 +44,7 @@ class App extends Component {
   render() {
     return (
       <Container>
+          <Header />
           <Route
             path="/"
             exact
@@ -48,16 +52,15 @@ class App extends Component {
               <Home {...props} />
             )}
           />
-          {/* <Route
-            path="/"
-            exact
-            render={props => (
-              <>
-                <SearchBar search={this.state.search} onChange={this.onChangeHandler} />
-                {!this.state.search.length ? this.displayStudios(props) : this.displaySearchResults(props)}
-              </>
-            )}
-          /> */}
+
+          <Route 
+            path="/login"
+            render={props => <Login {...props}/>}
+          />
+          <Route 
+            path="/register"
+            render={props => <Register {...props}/>}
+          />
 
           <Route 
             path="/anime/:id"
@@ -90,5 +93,4 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 100px;
 `;
